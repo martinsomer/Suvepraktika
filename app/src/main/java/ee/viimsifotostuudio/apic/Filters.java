@@ -189,7 +189,7 @@ public class Filters extends AppCompatActivity {
         // Create a new folder in SD Card
         File dir = new File(filepath.getAbsolutePath() + "/DCIM/Apic/");
         String imageName = System.currentTimeMillis() + ".jpg";
-        dir.mkdirs();
+        boolean dirCreateSuccessful = dir.mkdirs();
 
         //Create a name for the saved image
         File file = new File(dir, imageName);

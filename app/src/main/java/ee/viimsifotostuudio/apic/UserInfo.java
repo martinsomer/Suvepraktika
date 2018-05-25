@@ -25,12 +25,6 @@ public class UserInfo extends AppCompatActivity {
     EditText UserRealAddress;
     CheckBox CheckBox;
 
-    String firstName;
-    String lastName;
-    String phone;
-    String eMail;
-    String address;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

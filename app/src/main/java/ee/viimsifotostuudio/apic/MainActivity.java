@@ -125,7 +125,8 @@ public class MainActivity extends AppCompatActivity {
                 croppedImageUri = result.getUri();
                 applyFilter();
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                Exception error = result.getError();
+                Exception e = result.getError();
+                e.printStackTrace();
             }
         }
     }
