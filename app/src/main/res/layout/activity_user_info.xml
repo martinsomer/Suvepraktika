@@ -1,0 +1,144 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/copyToolbar"
+        android:minHeight="?attr/actionBarSize"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:titleTextColor="@android:color/white"
+        android:background="@color/colorPrimary"
+        android:theme="@style/MyAppBarLayoutTheme">
+    </android.support.v7.widget.Toolbar>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical" >
+
+                <!-- CHECKBOX -->
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="10dp"
+                    android:id="@+id/checkBoxWrapper"
+                    android:layout_alignParentBottom="true">
+                    <CheckBox
+                        android:id="@+id/checkBox"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:text="I accept the Terms and Conditions" />
+                </FrameLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_above="@+id/checkBoxWrapper">
+
+                    <!-- NAME, PHONE -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="horizontal"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp"
+                        android:paddingTop="10dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <EditText
+                                android:id="@+id/firstName"
+                                android:layout_width="138dp"
+                                android:layout_height="wrap_content"
+                                android:ems="10"
+                                android:hint="First Name"
+                                android:inputType="textPersonName" />
+
+                            <EditText
+                                android:id="@+id/phoneNumber"
+                                android:layout_width="138dp"
+                                android:layout_height="wrap_content"
+                                android:ems="10"
+                                android:hint="Phone"
+                                android:inputType="phone" />
+
+
+                            <EditText
+                                android:id="@+id/mail"
+                                android:layout_width="138dp"
+                                android:layout_height="wrap_content"
+                                android:ems="10"
+                                android:hint="E-mail"
+                                android:inputType="textEmailAddress" />
+                        </LinearLayout>
+
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1">
+
+                            <EditText
+                                android:id="@+id/lastName"
+                                android:layout_width="138dp"
+                                android:layout_height="wrap_content"
+                                android:ems="10"
+                                android:hint="Last Name"
+                                android:inputType="textPersonName" />
+                        </FrameLayout>
+
+                    </LinearLayout>
+
+                    <!-- ADDRESS -->
+                    <RadioGroup
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="start"
+                        android:orientation="vertical"
+                        android:paddingEnd="10dp"
+                        android:paddingStart="10dp">
+
+                        <RadioButton
+                            android:id="@+id/address1"
+                            android:layout_width="258dp"
+                            android:layout_height="42dp"
+                            android:checked="true"
+                            android:text="I will come to receive the photos at: [ADDRESS]" />
+
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingBottom="25dp" />
+
+                        <RadioButton
+                            android:id="@+id/address2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="false"
+                            android:text="My address is:" />
+
+                        <EditText
+                            android:id="@+id/UserAddress"
+                            android:layout_width="157dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="30dp"
+                            android:ems="10"
+                            android:inputType="text" />
+                    </RadioGroup>
+                </LinearLayout>
+            </RelativeLayout>
+
+</LinearLayout>

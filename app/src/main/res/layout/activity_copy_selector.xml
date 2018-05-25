@@ -1,0 +1,88 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/copyToolbar"
+        android:minHeight="?attr/actionBarSize"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:titleTextColor="@android:color/white"
+        android:background="@color/colorPrimary"
+        android:theme="@style/MyAppBarLayoutTheme">
+    </android.support.v7.widget.Toolbar>
+
+    <!-- CONTENT -->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <!-- ADD/SUBTRACT BUTTONS -->
+        <LinearLayout
+            android:id="@+id/controlsWrapper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@android:color/white"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="10dp"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp">
+
+            <Button
+                android:id="@+id/subtractImage"
+                android:layout_width="78dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="-"
+                android:background="@color/colorPrimary"
+                android:textColor="@android:color/white"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"/>
+
+            <TextView
+                android:id="@+id/copyNumber"
+                android:layout_width="78dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:gravity="center" />
+
+            <Button
+                android:id="@+id/addImage"
+                android:layout_width="78dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="+"
+                android:background="@color/colorPrimary"
+                android:textColor="@android:color/white"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"/>
+
+        </LinearLayout>
+
+        <!-- MAIN IMAGE -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/controlsWrapper" >
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:layout_gravity="center"
+                android:scaleType="fitCenter"/>
+        </FrameLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>

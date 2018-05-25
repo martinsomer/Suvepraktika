@@ -1,0 +1,38 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="260dp"
+            android:layout_height="332dp"
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/logotext" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="3">
+
+        <Button
+            android:id="@+id/selectImage"
+            android:layout_width="138dp"
+            android:layout_height="38dp"
+            android:layout_gravity="center"
+            android:text="SELECT IMAGE"
+            android:background="@color/colorPrimary"
+            android:textColor="@android:color/white" />
+    </FrameLayout>
+
+</LinearLayout>
