@@ -1,0 +1,18 @@
+Resources that inspired and helped
+----
+
+Button background stackoverflow.com/questions/6054562
+
+Setting view size programmatically stackoverflow.com/questions/4854492
+
+Cropping Bitmap into square stackoverflow.com/questions/6908604
+
+Showing HTML offline stackoverflow.com/questions/23854227
+
+Global variables stackoverflow.com/questions/1944656
+
+Checkbutton stackoverflow.com/questions/18336151
+
+RelativeLayout and align bottom coderanch.com/t/621280
+
+Back arrow stackoverflow.com/questions/26651602

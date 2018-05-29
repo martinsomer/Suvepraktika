@@ -1,6 +1,7 @@
 package ee.viimsifotostuudio.apic;
 
 import android.app.Application;
+import android.graphics.Bitmap;
 import android.net.Uri;
 
 public class Variables extends Application {
@@ -23,13 +24,13 @@ public class Variables extends Application {
         return croppedImageUri;
     }
 
-    //filter uri
-    private Uri filterImageUri;
-    public void setFilterImageUri(Uri variable) {
-        this.filterImageUri = variable;
+    //filter bitmap
+    private Bitmap filterImage;
+    public void setFilterImage(Bitmap variable) {
+        this.filterImage = variable;
     }
-    public Uri getFilterImageUri() {
-        return filterImageUri;
+    public Bitmap getFilterImage() {
+        return filterImage;
     }
 
     //copy number

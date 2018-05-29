@@ -89,7 +89,7 @@ public class UserInfo extends AppCompatActivity {
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_filters, menu);
+        getMenuInflater().inflate(R.menu.menu_misc, menu);
         return true;
     }
 

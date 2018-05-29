@@ -30,4 +30,7 @@ dependencies {
 
     //crop library
     implementation 'com.theartofdev.edmodo:android-image-cropper:2.7.0'
+
+    //filters library
+    implementation 'info.androidhive:imagefilters:1.0.7'
 }

@@ -2,12 +2,8 @@ package ee.viimsifotostuudio.apic;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.ColorMatrix;
-import android.graphics.ColorMatrixColorFilter;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,18 +16,23 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
+import com.zomato.photofilters.FilterPack;
+import com.zomato.photofilters.imageprocessors.Filter;
+
 import java.util.Objects;
 
 public class Filters extends AppCompatActivity {
 
     Uri croppedImageUri;
-    Uri filterImageUri;
     Bitmap originalBmp;
     Bitmap croppedBmp;
     ImageView filterLarge;
+    int currentFilter = 1;
+
+    Bitmap adeleLarge;
+    Bitmap haanLarge;
+    Bitmap aprilLarge;
+    Bitmap bluemessLarge;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,75 +93,71 @@ public class Filters extends AppCompatActivity {
             DisplayMetrics displayMetrics = new DisplayMetrics();
             getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
             int width = displayMetrics.widthPixels;
-            int thumbnailSize = Math.round(width/5);
+            final int thumbnailSize = Math.round(width/5);
 
-        //thumbnail 1 [NO FILTER]
+        //thumbnail 1
             ImageView filterView1 = findViewById(R.id.filter1);
-            filterView1.setImageBitmap(Bitmap.createScaledBitmap(croppedBmp, thumbnailSize, thumbnailSize, false));
+            final Filter adele = FilterPack.getAdeleFilter(this);
+            filterView1.setImageBitmap(Bitmap.createScaledBitmap(adele.processFilter(croppedBmp.copy(croppedBmp.getConfig(), true)), thumbnailSize, thumbnailSize, false));
 
-            ColorMatrix matrixNone = new ColorMatrix();
-            final ColorMatrixColorFilter filterNone = new ColorMatrixColorFilter(matrixNone);
-
-        //thumbnail 2 [GRAY SCALE]
+        //thumbnail 2
             ImageView filterView2 = findViewById(R.id.filter2);
-            filterView2.setImageBitmap(Bitmap.createScaledBitmap(croppedBmp, thumbnailSize, thumbnailSize, false));
+            final Filter haan = FilterPack.getHaanFilter(this);
+            filterView2.setImageBitmap(Bitmap.createScaledBitmap(haan.processFilter(croppedBmp.copy(croppedBmp.getConfig(), true)), thumbnailSize, thumbnailSize, false));
 
-            ColorMatrix matrixBW = new ColorMatrix();
-            matrixBW.setSaturation(0);
-            final ColorMatrixColorFilter filterBW = new ColorMatrixColorFilter(matrixBW);
-            filterView2.setColorFilter(filterBW);
-
-        //thumbnail 3 [SEPIA]
+        //thumbnail 3
             ImageView filterView3 = findViewById(R.id.filter3);
-            filterView3.setImageBitmap(Bitmap.createScaledBitmap(croppedBmp, thumbnailSize, thumbnailSize, false));
+            final Filter april = FilterPack.getAprilFilter(this);
+            filterView3.setImageBitmap(Bitmap.createScaledBitmap(april.processFilter(croppedBmp.copy(croppedBmp.getConfig(), true)), thumbnailSize, thumbnailSize, false));
 
-            ColorMatrix matrixSepia = new ColorMatrix();
-            matrixSepia.setScale(1f, .95f, .82f, 1.0f);
-            matrixBW.setConcat(matrixSepia, matrixBW);
-            final ColorMatrixColorFilter filterSepia = new ColorMatrixColorFilter(matrixBW);
-            filterView3.setColorFilter(filterSepia);
-
-        //thumbnail 4 [CROSS PROCESS]
+        //thumbnail 4
             ImageView filterView4 = findViewById(R.id.filter4);
-            filterView4.setImageBitmap(Bitmap.createScaledBitmap(croppedBmp, thumbnailSize, thumbnailSize, false));
+            final Filter bluemess = FilterPack.getBlueMessFilter(this);
+            filterView4.setImageBitmap(Bitmap.createScaledBitmap(bluemess.processFilter(croppedBmp.copy(croppedBmp.getConfig(), true)), thumbnailSize, thumbnailSize, false));
 
-            ColorMatrix matrixCrossProcessBW = new ColorMatrix();
-            ColorMatrix matrixCrossProcess = new ColorMatrix();
-            matrixCrossProcess.setScale(.9f, .6f, .8f, 1.0f);
-            matrixCrossProcessBW.setConcat(matrixCrossProcess, matrixCrossProcessBW);
-            final ColorMatrixColorFilter filterCrossProcess = new ColorMatrixColorFilter(matrixCrossProcessBW);
-            filterView4.setColorFilter(filterCrossProcess);
-
+        //generate bitmaps for preview
+            adeleLarge = adele.processFilter(originalBmp.copy(originalBmp.getConfig(), true));
+            haanLarge = haan.processFilter(originalBmp.copy(originalBmp.getConfig(), true));
+            aprilLarge = april.processFilter(originalBmp.copy(originalBmp.getConfig(), true));
+            bluemessLarge = bluemess.processFilter(originalBmp.copy(originalBmp.getConfig(), true));
 
             //onclick events
             filterView1.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View view){
-                    filterLarge.setColorFilter(filterNone);
+                    filterLarge.setImageBitmap(adeleLarge);
+                    currentFilter = 1;
                 }
             });
             filterView2.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View view){
-                    filterLarge.setColorFilter(filterBW);
+                    filterLarge.setImageBitmap(haanLarge);
+                    currentFilter = 2;
                 }
             });
             filterView3.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View view){
-                    filterLarge.setColorFilter(filterSepia);
+                    filterLarge.setImageBitmap(aprilLarge);
+                    currentFilter = 3;
                 }
             });
             filterView4.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View view){
-                    filterLarge.setColorFilter(filterCrossProcess);
+                    filterLarge.setImageBitmap(bluemessLarge);
+                    currentFilter = 4;
                 }
             });
         } catch (Exception e) {
             e.printStackTrace();
             Toast.makeText(this, "Failed to create Bitmap.", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    static {
+        System.loadLibrary("NativeImageProcessor");
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -173,56 +170,27 @@ public class Filters extends AppCompatActivity {
         int id = item.getItemId();
         switch(id) {
             case R.id.accept:
-                saveImage();
+                selectCopies();
+                break;
+            case R.id.undo:
+                filterLarge.setImageBitmap(originalBmp);
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    //save image with filter
-    private void saveImage() {
-        OutputStream output;
-        Bitmap bitmap = loadBitmapFromView(findViewById(R.id.filterLarge));
-
-        File filepath = Environment.getExternalStorageDirectory();
-
-        // Create a new folder in SD Card
-        File dir = new File(filepath.getAbsolutePath() + "/DCIM/Apic/");
-        String imageName = System.currentTimeMillis() + ".jpg";
-        boolean dirCreateSuccessful = dir.mkdirs();
-
-        //Create a name for the saved image
-        File file = new File(dir, imageName);
-
-        try {
-            output = new FileOutputStream(file);
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, output);
-            output.flush();
-            output.close();
-            sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(file)));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        filterImageUri = Uri.parse(dir + "/" + imageName);
-        selectCopies();
-    }
-    private Bitmap loadBitmapFromView(View v) {
-        final int w = v.getWidth();
-        final int h = v.getHeight();
-        final Bitmap b = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
-
-        final Canvas c = new  Canvas(b);
-
-        //v.layout(0, 0, w, h);
-        v.layout(v.getLeft(), v.getTop(), v.getRight(), v.getBottom());
-        v.draw(c);
-        return b;
-    }
-
     //next step
     private void selectCopies() {
-        ((Variables) this.getApplication()).setFilterImageUri(filterImageUri);
+        if (currentFilter == 1) {
+            ((Variables) this.getApplication()).setFilterImage(adeleLarge);
+        } else if (currentFilter == 2) {
+            ((Variables) this.getApplication()).setFilterImage(haanLarge);
+        } else if (currentFilter == 3) {
+            ((Variables) this.getApplication()).setFilterImage(aprilLarge);
+        } else if (currentFilter == 4) {
+            ((Variables) this.getApplication()).setFilterImage(bluemessLarge);
+        }
+
         Intent copySelector = new Intent(this, CopySelector.class);
         startActivity(copySelector);
     }
