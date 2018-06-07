@@ -23,7 +23,6 @@ import com.theartofdev.edmodo.cropper.CropImage;
 
 public class MainActivity extends AppCompatActivity {
 
-    ImageView imageView;
     int PICK_IMAGE = 0;
     Uri originalImageUri;
     Uri croppedImageUri;
@@ -33,8 +32,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        imageView = findViewById(R.id.imageView);
 
         //image selector button action
         Button imageSelector = findViewById(R.id.selectImage);
