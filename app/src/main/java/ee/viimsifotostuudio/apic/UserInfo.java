@@ -47,14 +47,25 @@ public class UserInfo extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         final Drawable upArrow = getResources().getDrawable(R.drawable.ic_menu_arrow_back);
         getSupportActionBar().setHomeAsUpIndicator(upArrow);
+
+        if (BuildConfig.DEBUG) {
+            Variables vars = (Variables) this.getApplication();
+            FirstName.setText(vars.getFirstName());
+            LastName.setText(vars.getLastName());
+            PhoneNumber.setText(vars.getPhone());
+            Mail.setText(vars.getEMail());
+            UserRealAddress.setText(vars.getAddress());
+        }
     }
 
     //next step
     private void payment() {
         if (CheckBox.isChecked()) {
             if (checkUserInfo()) {
-                Intent payment = new Intent(this, Payment.class);
-                startActivity(payment);
+                //Intent payment = new Intent(this, Payment.class);
+                //startActivity(payment);
+                Intent uploader = new Intent(this, Uploader.class);
+                startActivity(uploader);
             }
         } else {
             Toast.makeText(this, "Please Accept Terms and Conditions to continue.", Toast.LENGTH_SHORT).show();
