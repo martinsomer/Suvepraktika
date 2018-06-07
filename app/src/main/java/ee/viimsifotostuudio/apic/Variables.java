@@ -6,6 +6,19 @@ import android.net.Uri;
 
 public class Variables extends Application {
 
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        if (BuildConfig.DEBUG) {
+            setEMail("test@example.com");
+            setFirstName("Vello");
+            setLastName("Tamm");
+            setAddress("Viru väljak");
+            setNumberOfCopies(1);
+            setPhone("555-3422");
+        }
+    }
+
     //original uri
     private Uri originalImageUri;
     public void setOriginalImageUri(Uri variable) {
@@ -86,4 +99,15 @@ public class Variables extends Application {
     public String getAddress() {
         return address;
     }
+
+    private String paymentToken;
+    public void setPaymentToken(String token)
+    {
+        paymentToken = token;
+    }
+    public String getPaymentToken()
+    {
+        return paymentToken;
+    }
+
 }
