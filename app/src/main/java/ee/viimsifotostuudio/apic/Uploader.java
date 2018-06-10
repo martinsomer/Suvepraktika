@@ -62,7 +62,7 @@ import okio.Okio;
 // HTTP client https://github.com/square/okhttp
 public class Uploader extends AppCompatActivity {
 
-    final private static String SERVER_URL = "https://mockbin.org/request";
+    final private static String SERVER_URL = "https://192.168.0.108:8080/";
     ProgressBar progressBar;
     private Handler handler;
 
@@ -152,7 +152,7 @@ public class Uploader extends AppCompatActivity {
         String filename = null;
 
         while (counter < Integer.MAX_VALUE) {
-            filename = String.format(Locale.getDefault(), "%1/image_%2$05d.jpg", folder, counter);
+            filename = String.format(Locale.getDefault(), "%1s/image_%2$05d.jpg", folder, counter);
             File f = new File(filename);
             if (!f.exists()) {
                 break;
@@ -205,7 +205,8 @@ public class Uploader extends AppCompatActivity {
 
                 final SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
 
-                httpClientBuilder.sslSocketFactory(sslSocketFactory, trustMgr)
+                httpClientBuilder
+                        .sslSocketFactory(sslSocketFactory, trustMgr)
                         .hostnameVerifier(hostVerifier);
 
             } catch (NoSuchAlgorithmException | KeyManagementException e) {
@@ -243,7 +244,7 @@ public class Uploader extends AppCompatActivity {
         final Request req = new Request.Builder()
                 .url(SERVER_URL)
                 .addHeader("Accept", "application/json")
-                .post(body)
+                .post(body)// kus see faili nimi tuleb, py?
                 .build();
 
         final UploadTask asyncTask = new UploadTask();
