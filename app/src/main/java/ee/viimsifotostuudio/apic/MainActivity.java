@@ -15,7 +15,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.view.View;
-import android.widget.ImageView;
 import java.io.IOException;
 
 //crop library
@@ -32,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        setTitle("Äpic");
 
         //image selector button action
         Button imageSelector = findViewById(R.id.selectImage);

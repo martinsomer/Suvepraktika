@@ -4,8 +4,7 @@
 
     <item
         android:id="@+id/undo"
-        android:icon="@drawable/ic_menu_undo"
-        android:title=""
+        android:title="UNDO"
         app:showAsAction="always" />
 
     <item

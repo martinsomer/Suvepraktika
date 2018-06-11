@@ -2,6 +2,10 @@ package ee.viimsifotostuudio.apic;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
+import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.provider.MediaStore;
@@ -27,12 +31,8 @@ public class Filters extends AppCompatActivity {
     Bitmap originalBmp;
     Bitmap croppedBmp;
     ImageView filterLarge;
-    int currentFilter = 1;
-
-    Bitmap adeleLarge;
-    Bitmap haanLarge;
-    Bitmap aprilLarge;
-    Bitmap bluemessLarge;
+    int currentFilter = 0;
+    Bitmap FilterBitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,9 +55,13 @@ public class Filters extends AppCompatActivity {
 
         //create bitmap
         try {
+
+            /*
+                MAKE PREVIEW FIT PERFECTLY
+            */
+
             originalBmp = MediaStore.Images.Media.getBitmap(this.getContentResolver(), croppedImageUri);
 
-            //change large preview size based on image orientation
             if (originalBmp.getWidth() > originalBmp.getHeight()) {
                 ViewGroup.LayoutParams params = filterLarge.getLayoutParams();
                 params.width = ViewGroup.LayoutParams.MATCH_PARENT;
@@ -70,7 +74,10 @@ public class Filters extends AppCompatActivity {
                 filterLarge.setLayoutParams(params);
             }
 
-            //crop bitmap into square
+            /*
+                CREATE SQUARE BITMAP FOR THUMBNAILS
+            */
+
             if (originalBmp.getWidth() > originalBmp.getHeight()){
                 croppedBmp = Bitmap.createBitmap(
                         originalBmp,
@@ -79,7 +86,6 @@ public class Filters extends AppCompatActivity {
                         originalBmp.getHeight(),
                         originalBmp.getHeight()
                 );
-
             } else {
                 croppedBmp = Bitmap.createBitmap(
                         originalBmp,
@@ -95,59 +101,101 @@ public class Filters extends AppCompatActivity {
             int width = displayMetrics.widthPixels;
             final int thumbnailSize = Math.round(width/5);
 
-        //thumbnail 1
+            /*
+                COLOR FILTERS
+            */
+
+            ColorMatrix GrayScaleMatrix = new ColorMatrix();
+            GrayScaleMatrix.setSaturation(0);
+            final ColorMatrixColorFilter GrayScaleFilter = new ColorMatrixColorFilter(GrayScaleMatrix);
+
+            ColorMatrix SepiaMatrix = new ColorMatrix();
+            SepiaMatrix.setScale(1f, .95f, .82f, 1f);
+
+            GrayScaleMatrix.setConcat(SepiaMatrix, GrayScaleMatrix);
+            final ColorMatrixColorFilter SepiaFilter = new ColorMatrixColorFilter(GrayScaleMatrix);
+
+        /*
+            GENERATE THUMBNAIL FROM CROPPED BITMAP
+        */
+
+            Bitmap ThumbnailBitmap = Bitmap.createScaledBitmap(croppedBmp, thumbnailSize, thumbnailSize, false);
+
+            //thumbnail 1
             ImageView filterView1 = findViewById(R.id.filter1);
-            final Filter adele = FilterPack.getAdeleFilter(this);
-            filterView1.setImageBitmap(Bitmap.createScaledBitmap(adele.processFilter(croppedBmp.copy(croppedBmp.getConfig(), true)), thumbnailSize, thumbnailSize, false));
+            filterView1.setImageBitmap(ThumbnailBitmap);
+            filterView1.setColorFilter(GrayScaleFilter);
 
-        //thumbnail 2
+            //thumbnail 2
             ImageView filterView2 = findViewById(R.id.filter2);
-            final Filter haan = FilterPack.getHaanFilter(this);
-            filterView2.setImageBitmap(Bitmap.createScaledBitmap(haan.processFilter(croppedBmp.copy(croppedBmp.getConfig(), true)), thumbnailSize, thumbnailSize, false));
+            filterView2.setImageBitmap(ThumbnailBitmap);
+            filterView2.setColorFilter(SepiaFilter);
 
-        //thumbnail 3
+            //thumbnail 3
             ImageView filterView3 = findViewById(R.id.filter3);
-            final Filter april = FilterPack.getAprilFilter(this);
-            filterView3.setImageBitmap(Bitmap.createScaledBitmap(april.processFilter(croppedBmp.copy(croppedBmp.getConfig(), true)), thumbnailSize, thumbnailSize, false));
-
-        //thumbnail 4
-            ImageView filterView4 = findViewById(R.id.filter4);
             final Filter bluemess = FilterPack.getBlueMessFilter(this);
-            filterView4.setImageBitmap(Bitmap.createScaledBitmap(bluemess.processFilter(croppedBmp.copy(croppedBmp.getConfig(), true)), thumbnailSize, thumbnailSize, false));
+            filterView3.setImageBitmap(Bitmap.createScaledBitmap(bluemess.processFilter(croppedBmp.copy(croppedBmp.getConfig(), true)), thumbnailSize, thumbnailSize, false));
 
-        //generate bitmaps for preview
-            adeleLarge = adele.processFilter(originalBmp.copy(originalBmp.getConfig(), true));
-            haanLarge = haan.processFilter(originalBmp.copy(originalBmp.getConfig(), true));
-            aprilLarge = april.processFilter(originalBmp.copy(originalBmp.getConfig(), true));
-            bluemessLarge = bluemess.processFilter(originalBmp.copy(originalBmp.getConfig(), true));
+            //thumbnail 4
+            ImageView filterView4 = findViewById(R.id.filter4);
+            final Filter april = FilterPack.getAprilFilter(this);
+            filterView4.setImageBitmap(Bitmap.createScaledBitmap(april.processFilter(croppedBmp.copy(croppedBmp.getConfig(), true)), thumbnailSize, thumbnailSize, false));
+
+        /*
+            GENERATE LARGE PREVIEW
+        */
+            final Bitmap bluemessLarge = bluemess.processFilter(originalBmp.copy(originalBmp.getConfig(), true));
+            final Bitmap aprilLarge = april.processFilter(originalBmp.copy(originalBmp.getConfig(), true));
+
+
+            //prevent crash when no filter is selected
+            FilterBitmap = originalBmp;
 
             //onclick events
-            filterView1.setOnClickListener(new View.OnClickListener(){
+            filterView1.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View view){
-                    filterLarge.setImageBitmap(adeleLarge);
-                    currentFilter = 1;
+                public void onClick(View view) {
+                    final Bitmap bitmap = Bitmap.createBitmap(
+                            originalBmp.getWidth(),
+                            originalBmp.getHeight(),
+                            originalBmp.getConfig());
+                    Canvas canvas = new Canvas(bitmap);
+                    Paint paint = new Paint();
+                    paint.setColorFilter(GrayScaleFilter);
+                    canvas.drawBitmap(originalBmp, 0, 0, paint);
+                    filterLarge.setImageBitmap(bitmap);
+
+                    FilterBitmap = bitmap;
                 }
             });
-            filterView2.setOnClickListener(new View.OnClickListener(){
+            filterView2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view){
-                    filterLarge.setImageBitmap(haanLarge);
-                    currentFilter = 2;
+                    final Bitmap bitmap = Bitmap.createBitmap(
+                            originalBmp.getWidth(),
+                            originalBmp.getHeight(),
+                            originalBmp.getConfig());
+                    Canvas canvas = new Canvas(bitmap);
+                    Paint paint = new Paint();
+                    paint.setColorFilter(SepiaFilter);
+                    canvas.drawBitmap(originalBmp, 0, 0, paint);
+                    filterLarge.setImageBitmap(bitmap);
+
+                    FilterBitmap = bitmap;
                 }
             });
-            filterView3.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View view){
-                    filterLarge.setImageBitmap(aprilLarge);
-                    currentFilter = 3;
-                }
-            });
-            filterView4.setOnClickListener(new View.OnClickListener(){
+            filterView3.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view){
                     filterLarge.setImageBitmap(bluemessLarge);
-                    currentFilter = 4;
+                    FilterBitmap = bluemessLarge;
+                }
+            });
+            filterView4.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    filterLarge.setImageBitmap(aprilLarge);
+                    FilterBitmap = aprilLarge;
                 }
             });
         } catch (Exception e) {
@@ -174,6 +222,7 @@ public class Filters extends AppCompatActivity {
                 break;
             case R.id.undo:
                 filterLarge.setImageBitmap(originalBmp);
+                currentFilter = 0;
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -181,15 +230,8 @@ public class Filters extends AppCompatActivity {
 
     //next step
     private void selectCopies() {
-        if (currentFilter == 1) {
-            ((Variables) this.getApplication()).setFilterImage(adeleLarge);
-        } else if (currentFilter == 2) {
-            ((Variables) this.getApplication()).setFilterImage(haanLarge);
-        } else if (currentFilter == 3) {
-            ((Variables) this.getApplication()).setFilterImage(aprilLarge);
-        } else if (currentFilter == 4) {
-            ((Variables) this.getApplication()).setFilterImage(bluemessLarge);
-        }
+
+        ((Variables) this.getApplication()).setFilterImage(FilterBitmap);
 
         Intent copySelector = new Intent(this, CopySelector.class);
         startActivity(copySelector);

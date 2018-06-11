@@ -11,8 +11,10 @@ Showing HTML offline stackoverflow.com/questions/23854227
 
 Global variables stackoverflow.com/questions/1944656
 
-Checkbutton stackoverflow.com/questions/18336151
+Checkbox stackoverflow.com/questions/18336151
 
 RelativeLayout and align bottom coderanch.com/t/621280
 
 Back arrow stackoverflow.com/questions/26651602
+
+Color matrix https://stackoverflow.com/questions/3373860; http://android-er.blogspot.com/2015/11/convert-bitmap-to-grayscale-using.html
