@@ -62,7 +62,7 @@ import okio.Okio;
 // HTTP client https://github.com/square/okhttp
 public class Uploader extends AppCompatActivity {
 
-    final private static String SERVER_URL = "https://192.168.0.108:8080/";
+    final private static String SERVER_URL = "https://kalmerr.planet.ee/apic/";
     ProgressBar progressBar;
     private Handler handler;
 
