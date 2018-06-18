@@ -20,6 +20,10 @@ Veli Vaigur, Petrik Sarri, Martin Sõmer, Kalmer Roopa, Roland Kasenurm
   
 Paigaldamiseks peab avama telefonis seaded ning seejärel liikuma alamkategooriasse "Turvalisus". Seal peab lubama "Tundmatud allikad". Seejärel saab failihalduris avada .apk faili ning see paigaldada.  
   
+## Arenduskeskkonna ülesseadmise juhised  
+  
+Arenduskeskkonna üles seadmiseks peab paigaldama Android Studio ning selle avades valima "Check out project from version control", avanevast menüüst valida "GitHub". Avaneb aken, kuhu tuleb kleepida repositooriumi URL ning valida kohalik kaust, kuhu kloonida. Pärast projekti kloonimise ja laadimise lõppemist peab ülevalt paremalt valima "Sync Project with Gradle Files". Pärast seda peaks saama projekti ehitada ülevalt ribalt "Make Project" nupuga või seda käivitada kas virtuaalse või ühendatud füüsilise seadme peal nupuga "Run 'app'".  
+    
 ## Litsents  
   
 https://www.apache.org/licenses/LICENSE-2.0  
