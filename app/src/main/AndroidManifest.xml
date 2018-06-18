@@ -4,6 +4,9 @@
     package="ee.viimsifotostuudio.apic">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+
 
     <application
         android:name=".Variables"
@@ -60,6 +63,10 @@
             android:name=".Payment"
             android:parentActivityName=".UserInfo"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".Uploader"
+            android:screenOrientation="portrait"
+            android:parentActivityName=".UserInfo"/>
         <activity
             android:name=".TermsAndConditions"
             android:screenOrientation="portrait" />

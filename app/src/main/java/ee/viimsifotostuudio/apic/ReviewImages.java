@@ -186,7 +186,7 @@ public class ReviewImages extends AppCompatActivity {
 
     //next step
     private void userInfo() {
-        if (totalSum.compareTo(new BigDecimal("5")) == 0) {
+        if (totalSum.compareTo(new BigDecimal("4")) > 0) {
             Intent userInfo = new Intent(this, UserInfo.class);
             startActivity(userInfo);
         } else {

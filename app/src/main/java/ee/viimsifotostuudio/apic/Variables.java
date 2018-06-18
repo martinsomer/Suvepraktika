@@ -160,4 +160,15 @@ public class Variables extends Application {
     public String getAddress() {
         return address;
     }
+
+    //phsyical address
+    private String paymentToken;
+    public void setPaymentToken(String token)
+    {
+        paymentToken = token;
+    }
+    public String getPaymentToken()
+    {
+        return paymentToken;
+    }
 }

@@ -34,4 +34,8 @@ dependencies {
     //filters library
     implementation 'info.androidhive:imagefilters:1.0.7'
     implementation 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.3.0'
+
+    //http library
+    implementation 'com.squareup.okhttp3:okhttp:3.10.0'
+
 }
