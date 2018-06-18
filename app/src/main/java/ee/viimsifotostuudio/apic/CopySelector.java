@@ -13,13 +13,20 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Objects;
 
 public class CopySelector extends AppCompatActivity {
 
+    double photoPrice;
+    TextView totalSumView;
+    BigDecimal totalSum;
+    String totalSumWithText;
     ImageView imageView;
     TextView copyNumber;
-    int numberOfCopies = 1;
+    int numberOfCopies;
     Bitmap filterBitmap;
 
     @Override
@@ -27,11 +34,14 @@ public class CopySelector extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_copy_selector);
 
+        filterBitmap = ((Variables) this.getApplication()).getFilterImageArrayLastItem();
+
         copyNumber = findViewById(R.id.copyNumber);
         imageView = findViewById(R.id.imageView);
-        filterBitmap = ((Variables) this.getApplication()).getFilterImage();
+        totalSumView = findViewById(R.id.totalSumView);
 
         setTitle("Number of Copies");
+        numberOfCopies = ((Variables) this.getApplication()).getFilterImageQuantityLastItem();
 
         //toolbar
         Toolbar copiesToolbar = findViewById(R.id.copyToolbar);
@@ -56,6 +66,10 @@ public class CopySelector extends AppCompatActivity {
             imageView.setLayoutParams(params);
         }
 
+        photoPrice = ((Variables) this.getApplication()).getPrice();
+        totalSum = new BigDecimal(photoPrice * numberOfCopies).setScale(1, RoundingMode.HALF_UP);
+        updateTotalPrice();
+
         copyNumber.setText(String.valueOf(numberOfCopies));
         Button addImage = findViewById(R.id.addImage);
         addImage.setOnClickListener(new View.OnClickListener(){
@@ -75,14 +89,23 @@ public class CopySelector extends AppCompatActivity {
 
     private void subtractImage() {
         if (numberOfCopies > 1) {
-            numberOfCopies = numberOfCopies - 1;
+            numberOfCopies -= 1;
             copyNumber.setText(String.valueOf(numberOfCopies));
+            totalSum = totalSum.subtract(new BigDecimal(photoPrice).setScale(1, RoundingMode.HALF_UP));
+            updateTotalPrice();
         }
     }
 
     private void addImage() {
         numberOfCopies = numberOfCopies + 1;
         copyNumber.setText(String.valueOf(numberOfCopies));
+        totalSum = totalSum.add(new BigDecimal(photoPrice).setScale(1, RoundingMode.HALF_UP));
+        updateTotalPrice();
+    }
+
+    public void updateTotalPrice() {
+        totalSumWithText = "Total price: " + String.valueOf(totalSum) + "€";
+        totalSumView.setText(totalSumWithText);
     }
 
     //options menu onclick
@@ -98,9 +121,9 @@ public class CopySelector extends AppCompatActivity {
 
     //next step
     private void userInfo() {
-        ((Variables) this.getApplication()).setNumberOfCopies(numberOfCopies);
-        Intent userInfo = new Intent(this, UserInfo.class);
-        startActivity(userInfo);
+        ((Variables) this.getApplication()).setFilterImageQuantityLastItem(numberOfCopies);
+        Intent reviewImages = new Intent(this, ReviewImages.class);
+        startActivity(reviewImages);
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {

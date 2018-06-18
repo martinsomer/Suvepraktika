@@ -1,12 +1,11 @@
 package ee.viimsifotostuudio.apic;
 
-import android.graphics.drawable.Drawable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.webkit.WebView;
 import android.widget.Toast;
-
-import java.util.Objects;
 
 public class TermsAndConditions extends AppCompatActivity {
 
@@ -19,9 +18,9 @@ public class TermsAndConditions extends AppCompatActivity {
 
         setTitle("Terms and Conditions");
 
-        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
-        final Drawable upArrow = getResources().getDrawable(R.drawable.ic_menu_arrow_back);
-        getSupportActionBar().setHomeAsUpIndicator(upArrow);
+        ActionBar actionBar = getSupportActionBar();
+        assert actionBar != null;
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         try {
             webView = findViewById(R.id.termsView);
@@ -31,5 +30,21 @@ public class TermsAndConditions extends AppCompatActivity {
             Toast.makeText(this, "Terms and Conditions could not be loaded.", Toast.LENGTH_SHORT).show();
             this.finish();
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
     }
 }

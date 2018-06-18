@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-
+    <item
+        android:id="@+id/location"
+        android:title="Where to find us?"
+        />
     <item
         android:id="@+id/terms"
         android:title="Terms and Conditions"
@@ -9,5 +12,4 @@
         android:id="@+id/license"
         android:title="License"
     />
-
 </menu>

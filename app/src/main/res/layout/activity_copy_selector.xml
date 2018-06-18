@@ -28,46 +28,60 @@
             android:id="@+id/controlsWrapper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
+            android:orientation="vertical"
             android:background="@android:color/white"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:padding="10dp"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp">
-
-            <Button
-                android:id="@+id/subtractImage"
-                android:layout_width="78dp"
+            android:layout_alignParentBottom="true">
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="-"
-                android:background="@color/colorPrimary"
-                android:textColor="@android:color/white"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?attr/selectableItemBackground"/>
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="10dp"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp">
+
+                <Button
+                    android:id="@+id/subtractImage"
+                    android:layout_width="78dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="-"
+                    android:background="@color/colorPrimary"
+                    android:textColor="@android:color/white"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"/>
+
+                <TextView
+                    android:id="@+id/copyNumber"
+                    android:layout_width="78dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:gravity="center" />
+
+                <Button
+                    android:id="@+id/addImage"
+                    android:layout_width="78dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="+"
+                    android:background="@color/colorPrimary"
+                    android:textColor="@android:color/white"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"/>
+            </LinearLayout>
 
             <TextView
-                android:id="@+id/copyNumber"
-                android:layout_width="78dp"
+                android:id="@+id/totalSumView"
+                android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_weight="1"
-                android:gravity="center" />
-
-            <Button
-                android:id="@+id/addImage"
-                android:layout_width="78dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="+"
-                android:background="@color/colorPrimary"
-                android:textColor="@android:color/white"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?attr/selectableItemBackground"/>
-
+                android:gravity="center"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
         </LinearLayout>
+
 
         <!-- MAIN IMAGE -->
         <FrameLayout

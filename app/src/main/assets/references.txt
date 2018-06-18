@@ -18,3 +18,19 @@ RelativeLayout and align bottom coderanch.com/t/621280
 Back arrow stackoverflow.com/questions/26651602
 
 Color matrix https://stackoverflow.com/questions/3373860; http://android-er.blogspot.com/2015/11/convert-bitmap-to-grayscale-using.html
+
+Adding elements to LinearLayout dynamically stackoverflow.com/questions/7916527
+
+Removing elements from dynamic LinearLayout dynamically stackoverflow.com/questions/11050059
+
+Restart activity without animation stackoverflow.com/questions/31628459
+
+Make a view fill remaining space stackoverflow.com/questions/6316540
+
+Rounding a BigDecimal stackoverflow.com/questions/3843440
+
+Override back button http://programmerguru.com/android-tutorial/how-to-change-the-back-button-behaviour/; stackoverflow.com/questions/35810229
+
+Round button ripple stackoverflow.com/questions/31941753
+
+Opening an URL in browser https://www.mkyong.com/android/how-to-open-an-url-in-androids-web-browser/
