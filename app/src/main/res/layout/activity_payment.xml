@@ -1,68 +1,39 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="3">
-    </FrameLayout>
+    <Button
+        android:layout_gravity="center"
+        android:id="@+id/bank1"
+        android:layout_width="186dp"
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_green_light"
+        android:text="Bank 1"
+        android:textColor="@android:color/white"
+        android:onClick="upload"
+        tools:ignore="HardcodedText" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="2"
-        android:orientation="vertical">
-        <FrameLayout
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <Button
-                android:layout_gravity="center"
-                android:id="@+id/bank1"
-                android:layout_width="186dp"
-                android:layout_height="wrap_content"
-                android:background="@android:color/holo_green_light"
-                android:text="Bank 1"
-                android:textColor="@android:color/white"
-                android:onClick="upload"/>
-        </FrameLayout>
+    <Button
+        android:layout_gravity="center"
+        android:id="@+id/bank2"
+        android:layout_width="186dp"
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_blue_dark"
+        android:text="Bank 2"
+        android:textColor="@android:color/white"
+        tools:ignore="HardcodedText" />
 
-        <FrameLayout
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <Button
-                android:layout_gravity="center"
-                android:id="@+id/bank2"
-                android:layout_width="186dp"
-                android:layout_height="wrap_content"
-                android:background="@android:color/holo_blue_dark"
-                android:text="Bank 2"
-                android:textColor="@android:color/white"/>
-        </FrameLayout>
-
-        <FrameLayout
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <Button
-                android:layout_gravity="center"
-                android:id="@+id/bank3"
-                android:layout_width="186dp"
-                android:layout_height="wrap_content"
-                android:background="?android:attr/colorActivatedHighlight"
-                android:text="Bank 3"
-                android:textColor="@android:color/white"/>
-        </FrameLayout>
-    </LinearLayout>
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="3">
-    </FrameLayout>
+    <Button
+        android:layout_gravity="center"
+        android:id="@+id/bank3"
+        android:layout_width="186dp"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/colorActivatedHighlight"
+        android:text="Bank 3"
+        android:textColor="@android:color/white"
+        tools:ignore="HardcodedText" />
 
 </LinearLayout>

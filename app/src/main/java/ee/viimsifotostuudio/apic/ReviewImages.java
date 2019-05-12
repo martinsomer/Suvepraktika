@@ -20,7 +20,6 @@ import android.widget.Toast;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.Objects;
 
 public class ReviewImages extends AppCompatActivity {
 
@@ -40,7 +39,10 @@ public class ReviewImages extends AppCompatActivity {
         Toolbar copiesToolbar = findViewById(R.id.copyToolbar);
         setSupportActionBar(copiesToolbar);
         copiesToolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
-        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
         final Drawable upArrow = getResources().getDrawable(R.drawable.ic_menu_arrow_back);
         getSupportActionBar().setHomeAsUpIndicator(upArrow);
         copiesToolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -122,7 +124,7 @@ public class ReviewImages extends AppCompatActivity {
 
     public void subtractImage(View v) {
         // row is your row, the parent of the clicked button
-        View row = (View) v.getParent().getParent().getParent();
+        View row = (View) v.getParent().getParent();
         // container contains all the rows, you could keep a variable somewhere else to the container which you can refer to here
         ViewGroup container = ((ViewGroup)row.getParent());
         int index = container.indexOfChild(row);
@@ -140,7 +142,7 @@ public class ReviewImages extends AppCompatActivity {
 
     public void addImage(View v) {
         // row is your row, the parent of the clicked button
-        View row = (View) v.getParent().getParent().getParent();
+        View row = (View) v.getParent().getParent();
         // container contains all the rows, you could keep a variable somewhere else to the container which you can refer to here
         ViewGroup container = ((ViewGroup)row.getParent());
         int index = container.indexOfChild(row);
@@ -178,7 +180,13 @@ public class ReviewImages extends AppCompatActivity {
         int id = item.getItemId();
         switch(id) {
             case R.id.accept:
-                userInfo();
+
+                // DEBUG FOR UPLOADING
+                Intent uploader = new Intent(this, Uploader.class);
+                startActivity(uploader);
+
+                // UNCOMMENT THIS WHEN DONE
+                //userInfo();
                 break;
         }
         return super.onOptionsItemSelected(item);

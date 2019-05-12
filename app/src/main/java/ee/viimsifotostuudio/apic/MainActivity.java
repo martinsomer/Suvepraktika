@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        setTitle("Äpic");
+        setTitle("Memories Matter!");
 
         //image selector button action
         Button imageSelector = findViewById(R.id.selectImage);

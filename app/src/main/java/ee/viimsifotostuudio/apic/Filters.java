@@ -15,8 +15,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import java.util.Objects;
-
 import com.zomato.photofilters.FilterPack;
 import com.zomato.photofilters.imageprocessors.Filter;
 import jp.co.cyberagent.android.gpuimage.*;
@@ -46,7 +44,9 @@ public class Filters extends AppCompatActivity {
         Toolbar filtersToolbar = findViewById(R.id.filter_toolbar);
         setSupportActionBar(filtersToolbar);
         filtersToolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
-        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
         final Drawable upArrow = getResources().getDrawable(R.drawable.ic_menu_arrow_back);
         getSupportActionBar().setHomeAsUpIndicator(upArrow);
 

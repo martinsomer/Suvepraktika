@@ -28,11 +28,11 @@ public class GalleryAndCrop extends AppCompatActivity {
 
     //gallery method
     public void openGallery() {
-        String[] mimeTypes = {"image/jpg", "image/jpeg","image/png"};
+//        String[] mimeTypes = {"image/jpg", "image/jpeg","image/png"};
         Intent gallery = new Intent();
         gallery.setAction(Intent.ACTION_GET_CONTENT);
         gallery.setType("image/*");
-        gallery.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
+//        gallery.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
         startActivityForResult(gallery, PICK_IMAGE);
     }
 

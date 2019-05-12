@@ -1,5 +1,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
@@ -37,7 +38,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:gravity="center"
-                android:text="I accept the Terms and Conditions" />
+                android:text="I accept the Terms and Conditions"
+                tools:ignore="HardcodedText" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -51,7 +53,8 @@
                 android:text="(?)"
                 android:textColor="@color/colorPrimary"
                 android:textSize="20sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                tools:ignore="HardcodedText" />
         </LinearLayout>
 
         <LinearLayout
@@ -63,12 +66,12 @@
             <!-- NAME, PHONE, MAIL -->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
-                android:paddingTop="10dp">
+                android:paddingTop="10dp"
+                android:baselineAligned="false">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -82,7 +85,8 @@
                         android:layout_height="wrap_content"
                         android:ems="10"
                         android:hint="First Name"
-                        android:inputType="textPersonName" />
+                        android:inputType="textPersonName"
+                        tools:ignore="HardcodedText" />
 
                     <EditText
                         android:id="@+id/phoneNumber"
@@ -90,7 +94,8 @@
                         android:layout_height="wrap_content"
                         android:ems="10"
                         android:hint="Phone"
-                        android:inputType="phone" />
+                        android:inputType="phone"
+                        tools:ignore="HardcodedText" />
 
 
                     <EditText
@@ -99,7 +104,8 @@
                         android:layout_height="wrap_content"
                         android:ems="10"
                         android:hint="E-mail"
-                        android:inputType="textEmailAddress" />
+                        android:inputType="textEmailAddress"
+                        tools:ignore="HardcodedText" />
                 </LinearLayout>
 
                 <FrameLayout
@@ -113,18 +119,19 @@
                         android:layout_height="wrap_content"
                         android:ems="10"
                         android:hint="Last Name"
-                        android:inputType="textPersonName" />
+                        android:inputType="textPersonName"
+                        tools:ignore="HardcodedText" />
                 </FrameLayout>
 
             </LinearLayout>
 
             <!-- ADDRESS -->
             <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
                 android:gravity="start"
+                android:orientation="vertical"
                 android:paddingEnd="10dp"
                 android:paddingStart="10dp">
 
@@ -132,27 +139,32 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
+
                     <RadioButton
                         android:id="@+id/address1"
-                        android:layout_weight="0.25"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_weight="0.25"
                         android:checked="true"
                         android:onClick="userAddress1checked"
-                        android:text="I will come to receive the photos at Tallinna Purjespordikeskuses, Purje 8 / korpus 4" />
+                        android:text="I will come to receive the photos at Tallinna Purjespordikeskuses, Purje 8 / korpus 4"
+                        tools:ignore="HardcodedText" />
+
                     <FrameLayout
-                        android:layout_weight="0.75"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.75">
+
                         <ImageView
-                            android:onClick="openLocation"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:background="@drawable/ic_menu_location"
                             android:clickable="true"
                             android:focusable="true"
                             android:foreground="?actionBarItemBackground"
-                            android:layout_gravity="center"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/ic_menu_location"/>
+                            android:onClick="openLocation"
+                            tools:ignore="ContentDescription" />
                     </FrameLayout>
                 </LinearLayout>
 
@@ -168,7 +180,8 @@
                         android:layout_height="match_parent"
                         android:checked="false"
                         android:onClick="userAddress2checked"
-                        android:text="My address is:" />
+                        android:text="My address is:"
+                        tools:ignore="HardcodedText" />
 
                     <EditText
                         android:id="@+id/UserAddress"
@@ -178,7 +191,8 @@
                         android:ems="10"
                         android:hint="Address"
                         android:inputType="text"
-                        android:textSize="15sp" />
+                        android:textSize="15sp"
+                        tools:ignore="HardcodedText" />
                 </LinearLayout>
 
             </LinearLayout>

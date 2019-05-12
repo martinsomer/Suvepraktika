@@ -3,12 +3,8 @@ package ee.viimsifotostuudio.apic;
 import android.app.Application;
 import android.graphics.Bitmap;
 import android.net.Uri;
-
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.IntStream;
 
 public class Variables extends Application {
 
@@ -18,12 +14,8 @@ public class Variables extends Application {
     }
 
     //original uri
-    private Uri originalImageUri;
     public void setOriginalImageUri(Uri variable) {
         this.croppedImageUri = variable;
-    }
-    public Uri getOriginalImageUri() {
-        return croppedImageUri;
     }
 
     //cropped uri
@@ -36,7 +28,7 @@ public class Variables extends Application {
     }
 
     //filter bitmap array
-    private List<Bitmap> FilterImageArray = new ArrayList<Bitmap>();
+    private List<Bitmap> FilterImageArray = new ArrayList<>();
     public void addFilterImageArray(Bitmap variable) {
         this.FilterImageArray.add(variable);
     }
@@ -55,12 +47,9 @@ public class Variables extends Application {
     public void setFilterImageArrayLastItem(Bitmap variable) {
         this.FilterImageArray.set((getFilterImageArrayLength() - 1), variable);
     }
-    public void removeFilterImageArrayLastItem() {
-        FilterImageArray.remove(getFilterImageArrayLength() - 1);
-    }
 
     //quantity array
-    private List<Integer> FilterImageQuantity = new ArrayList<Integer>();
+    private List<Integer> FilterImageQuantity = new ArrayList<>();
     public void addFilterImageQuantity(int variable) {
         this.FilterImageQuantity.add(variable);
     }
@@ -87,9 +76,6 @@ public class Variables extends Application {
     public void setFilterImageQuantityLastItem(int variable) {
         this.FilterImageQuantity.set((getFilterImageQuantityLength() - 1), variable);
     }
-    public void removeFilterImageQuantityLastItem() {
-        FilterImageQuantity.remove(getFilterImageQuantityLength() - 1);
-    }
     public int getTotalCopies() {
         int variable = 0;
         for (int i=0; i<getFilterImageQuantityLength(); i++) {
@@ -106,15 +92,6 @@ public class Variables extends Application {
     public boolean getOverwriteLastPhoto() {
         return OverwriteLastPhoto;
     }
-
-    //copy number
-//    private int numberOfCopies;
-//    public void setNumberOfCopies(int variable) {
-//        this.numberOfCopies = variable;
-//    }
-//    public int getNumberOfCopies() {
-//        return numberOfCopies;
-//    }
 
     //first name
     private String firstName;
@@ -161,14 +138,9 @@ public class Variables extends Application {
         return address;
     }
 
-    //phsyical address
+    //payment token
     private String paymentToken;
-    public void setPaymentToken(String token)
-    {
+    public void setPaymentToken(String token) {
         paymentToken = token;
-    }
-    public String getPaymentToken()
-    {
-        return paymentToken;
     }
 }

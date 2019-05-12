@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.webkit.WebView;
 import android.widget.Toast;
 
-import java.util.Objects;
-
 public class License extends AppCompatActivity {
 
     WebView webView;
@@ -19,7 +17,9 @@ public class License extends AppCompatActivity {
 
         setTitle("License");
 
-        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
         final Drawable upArrow = getResources().getDrawable(R.drawable.ic_menu_arrow_back);
         getSupportActionBar().setHomeAsUpIndicator(upArrow);
 

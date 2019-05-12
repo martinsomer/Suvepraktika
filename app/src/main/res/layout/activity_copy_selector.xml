@@ -50,7 +50,8 @@
                     android:textColor="@android:color/white"
                     android:clickable="true"
                     android:focusable="true"
-                    android:foreground="?attr/selectableItemBackground"/>
+                    android:foreground="?attr/selectableItemBackground"
+                    tools:ignore="HardcodedText" />
 
                 <TextView
                     android:id="@+id/copyNumber"
@@ -69,13 +70,14 @@
                     android:textColor="@android:color/white"
                     android:clickable="true"
                     android:focusable="true"
-                    android:foreground="?attr/selectableItemBackground"/>
+                    android:foreground="?attr/selectableItemBackground"
+                    tools:ignore="HardcodedText" />
             </LinearLayout>
 
             <TextView
                 android:id="@+id/totalSumView"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="0dp"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:textSize="18sp"

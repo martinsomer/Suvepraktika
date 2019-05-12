@@ -1,6 +1,7 @@
 package ee.viimsifotostuudio.apic;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -10,11 +11,8 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.media.RingtoneManager;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -28,28 +26,21 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.security.KeyManagementException;
-import java.security.KeyStore;
-import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSession;
 import javax.net.ssl.SSLSocketFactory;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.TrustManagerFactory;
 import javax.net.ssl.X509TrustManager;
 
 import okhttp3.Call;
@@ -62,6 +53,7 @@ import okhttp3.Protocol;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 import okhttp3.TlsVersion;
 import okio.BufferedSink;
 import okio.Okio;
@@ -69,7 +61,9 @@ import okio.Okio;
 // HTTP client https://github.com/square/okhttp
 public class Uploader extends AppCompatActivity {
 
-    final private static String SERVER_URL = "https://kalmerr.planet.ee/apic/";
+//    final private static String SERVER_URL = "https://kalmerr.planet.ee/apic/";
+    final private static String SERVER_URL = "https://upload.getapic.ee/";
+//    final private static String SERVER_URL = "https://getapic.ee/apic/";
     final public static String NOTIFICATION_UPLOADING = "uploading";
     final public static String NOTIFICATION_COMPLETED = "upload_complete";
 
@@ -77,26 +71,26 @@ public class Uploader extends AppCompatActivity {
     NotificationManager mNotificationManager;
     Notification.Builder mNotiBuilder;
 
-    static class HttpResponse {
-        int code;
-        String body;
-
-        public int getCode() {
-            return code;
-        }
-
-        public void setCode(int code) {
-            this.code = code;
-        }
-
-        public String getBody() {
-            return body;
-        }
-
-        public void setBody(String body) {
-            this.body = body;
-        }
-    }
+//    static class HttpResponse {
+//        int code;
+//        String body;
+//
+//        public int getCode() {
+//            return code;
+//        }
+//
+//        public void setCode(int code) {
+//            this.code = code;
+//        }
+//
+//        public String getBody() {
+//            return body;
+//        }
+//
+//        public void setBody(String body) {
+//            this.body = body;
+//        }
+//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,7 +99,9 @@ public class Uploader extends AppCompatActivity {
 
         setTitle("Let's upload your picture");
 
-        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
         final Drawable upArrow = getResources().getDrawable(R.drawable.ic_menu_arrow_back);
         getSupportActionBar().setHomeAsUpIndicator(upArrow);
 
@@ -165,10 +161,10 @@ public class Uploader extends AppCompatActivity {
         } else
             mNotiBuilder.setPriority(Notification.PRIORITY_DEFAULT);
 
-        if (BuildConfig.DEBUG) {
+//        if (BuildConfig.DEBUG) {
             //Notification m = mNotiBuilder.build();
             //mNotificationManager.notify(1, m);
-        }
+//        }
     }
 
     @Override
@@ -197,31 +193,32 @@ public class Uploader extends AppCompatActivity {
         }
     }
 
-    private String GetFilePath() {
-        int counter = 0;
-        if (!Environment.getExternalStorageDirectory().exists())
-            return null;
-
-        String root = Environment.getExternalStorageDirectory().toString();
-        String folder = root + "/" + getApplicationContext().getResources().getString(R.string.app_name);
-
-        File myDir = new File(folder);
-        if (!myDir.mkdirs())
-            return null;
-
-        String filename = null;
-
-        while (counter < Integer.MAX_VALUE) {
-            filename = String.format(Locale.getDefault(), "%1s/image_%2$05d.jpg", folder, counter);
-            File f = new File(filename);
-            if (!f.exists()) {
-                break;
-            }
-            counter++;
-        }
-
-        return filename;
-    }
+//    private String GetFilePath() {
+//        int counter = 0;
+//        if (!Environment.getExternalStorageDirectory().exists()) {
+//            return null;
+//        }
+//
+//        String root = Environment.getExternalStorageDirectory().toString();
+//        String folder = root + "/" + getApplicationContext().getResources().getString(R.string.app_name);
+//
+//        File myDir = new File(folder);
+//        if (!myDir.mkdirs())
+//            return null;
+//
+//        String filename = null;
+//
+//        while (counter < Integer.MAX_VALUE) {
+//            filename = String.format(Locale.getDefault(), "%1s/image_%2$05d.jpg", folder, counter);
+//            File f = new File(filename);
+//            if (!f.exists()) {
+//                break;
+//            }
+//            counter++;
+//        }
+//
+//        return filename;
+//    }
 
     private void UploadImage() {
         //mNotiBuilder.setProgress(100, 0, true);
@@ -277,18 +274,22 @@ public class Uploader extends AppCompatActivity {
 
         final OkHttpClient httpClient = httpBuilder.build();
 
-        final MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM)
-                .addFormDataPart("firstName", vars.getFirstName())
-                .addFormDataPart("lastName", vars.getLastName())
-                .addFormDataPart("email", vars.getEMail())
-                .addFormDataPart("phone", vars.getPhone())
-                .addFormDataPart("address", vars.getAddress());
+        MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM)
+                .addFormDataPart("firstName", String.valueOf(vars.getFirstName()))
+                .addFormDataPart("lastName",  String.valueOf(vars.getLastName()))
+                .addFormDataPart("email",     String.valueOf(vars.getEMail()))
+                .addFormDataPart("phone",     String.valueOf(vars.getPhone()))
+                .addFormDataPart("address",   String.valueOf(vars.getAddress()));
+
         for (int i = 0; i<vars.getFilterImageArrayLength(); i++) {
             Bitmap img = vars.getFilterImageArray(i);
+//            String copies = String.valueOf(vars.getFilterImageQuantity(i));
+
             ByteArrayOutputStream outStream = new ByteArrayOutputStream();
             img.compress(Bitmap.CompressFormat.JPEG, 90, outStream);
 
-            body.addFormDataPart(String.format(Locale.getDefault(), "copies[%1$d]", i), String.valueOf(vars.getFilterImageQuantity(i)))
+            body
+                    .addFormDataPart(String.format(Locale.getDefault(), "copies[%1$d]", i), String.valueOf(vars.getFilterImageQuantity(i)))
                     .addFormDataPart(String.format(Locale.getDefault(), "filterImage[%1$d]", i), "pic.jpg",
 
                             //.addFormDataPart("copies", String.valueOf(vars.getFilterImageQuantity(0)))
@@ -324,14 +325,14 @@ public class Uploader extends AppCompatActivity {
 
         httpClient.newCall(req).enqueue(new Callback() {
             @Override
-            public void onFailure(Call call, IOException e) {
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 Toast.makeText(getApplicationContext(),
                         "Error occurred while contacting the server. Try again later.",
                         Toast.LENGTH_SHORT).show();
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 Log.d("Uploader", "In onResponse");
 
                 mNotiBuilder.setAutoCancel(true)
@@ -353,8 +354,14 @@ public class Uploader extends AppCompatActivity {
 
                 if (response.code() == 200) {
                     try {
-                        json = new JSONObject(response.body().string());
+                        ResponseBody responseBody = response.body();
+                        String responseBodyAsString = responseBody.string(); // .string() can be called once
+
+                        Log.d("LOG", String.valueOf(responseBodyAsString));
+
+                        json = new JSONObject(String.valueOf(responseBodyAsString));
                         ((Variables) ctx).setPaymentToken(json.getString("token"));
+
                         Intent payment = new Intent(ctx, Payment.class);
                         startActivity(payment);
                         return;
@@ -363,14 +370,14 @@ public class Uploader extends AppCompatActivity {
                     }
                 }
 
-                Toast.makeText(ctx,
-                        "Problem parsing server response. Try again later.",
-                        Toast.LENGTH_SHORT).show();
+                //CRASH
+//                Toast.makeText(ctx,"Problem parsing server response. Try again later.", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     class OverlyTrustyHostnameVerifier implements HostnameVerifier {
+        @SuppressLint("BadHostnameVerifier") //suppress
         @Override
         public boolean verify(String hostname, SSLSession session) {
             return true;
@@ -379,14 +386,14 @@ public class Uploader extends AppCompatActivity {
 
     // Ignores all certificate errors, for debugging
     class OverlyTrustingTrustManager implements X509TrustManager {
+        @SuppressLint("TrustAllX509TrustManager") //suppress
         @Override
-        public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
-
+        public void checkClientTrusted(X509Certificate[] chain, String authType) {
         }
 
+        @SuppressLint("TrustAllX509TrustManager") //suppress
         @Override
-        public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
-
+        public void checkServerTrusted(X509Certificate[] chain, String authType) {
         }
 
         @Override
@@ -401,7 +408,7 @@ public class Uploader extends AppCompatActivity {
         private long byteCount;
         private ProgressListener listener;
 
-        public ProgressingRequestBody(final MediaType type, final ByteArrayOutputStream bytes, final ProgressListener listener) {
+        ProgressingRequestBody(final MediaType type, final ByteArrayOutputStream bytes, final ProgressListener listener) {
             this.contentType = type;
             this.source = new ByteArrayInputStream(bytes.toByteArray());
             this.byteCount = source.available();
@@ -420,7 +427,7 @@ public class Uploader extends AppCompatActivity {
 
         @Override
         public void writeTo(@NonNull BufferedSink sink) throws IOException {
-            long read = 0;
+            long read;
             long total = 0;
             okio.Source reader = Okio.source(source);
 
@@ -436,4 +443,3 @@ public class Uploader extends AppCompatActivity {
         }
     }
 }
-

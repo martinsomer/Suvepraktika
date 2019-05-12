@@ -34,3 +34,7 @@ Override back button http://programmerguru.com/android-tutorial/how-to-change-th
 Round button ripple stackoverflow.com/questions/31941753
 
 Opening an URL in browser https://www.mkyong.com/android/how-to-open-an-url-in-androids-web-browser/
+
+Email check https://www.geeksforgeeks.org/check-email-address-valid-not-java/
+
+Get current URL from WebView stackoverflow.com/questions/23827460/

@@ -16,7 +16,6 @@ import android.widget.TextView;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.Objects;
 
 public class CopySelector extends AppCompatActivity {
 
@@ -47,7 +46,9 @@ public class CopySelector extends AppCompatActivity {
         Toolbar copiesToolbar = findViewById(R.id.copyToolbar);
         setSupportActionBar(copiesToolbar);
         copiesToolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
-        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
         final Drawable upArrow = getResources().getDrawable(R.drawable.ic_menu_arrow_back);
         getSupportActionBar().setHomeAsUpIndicator(upArrow);
 

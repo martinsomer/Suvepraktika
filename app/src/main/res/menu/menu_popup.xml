@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/location"
         android:title="Where to find us?"
-        />
+        tools:ignore="HardcodedText" />
     <item
         android:id="@+id/terms"
         android:title="Terms and Conditions"
-    />
+        tools:ignore="HardcodedText" />
     <item
         android:id="@+id/license"
         android:title="License"
-    />
+        tools:ignore="HardcodedText" />
 </menu>

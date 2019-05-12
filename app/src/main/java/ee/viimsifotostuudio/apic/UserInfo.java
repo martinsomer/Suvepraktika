@@ -1,7 +1,10 @@
 package ee.viimsifotostuudio.apic;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,7 +17,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
-import java.util.Objects;
+import java.util.regex.Pattern;
 
 public class UserInfo extends AppCompatActivity {
 
@@ -46,7 +49,9 @@ public class UserInfo extends AppCompatActivity {
         Toolbar copiesToolbar = findViewById(R.id.copyToolbar);
         setSupportActionBar(copiesToolbar);
         copiesToolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
-        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
         final Drawable upArrow = getResources().getDrawable(R.drawable.ic_menu_arrow_back);
         getSupportActionBar().setHomeAsUpIndicator(upArrow);
     }
@@ -55,12 +60,26 @@ public class UserInfo extends AppCompatActivity {
     private void payment() {
         if (CheckBox.isChecked()) {
             if (checkUserInfo()) {
-                Intent payment = new Intent(this, Payment.class);
-                startActivity(payment);
+
+                if (isNetworkAvailable()) {
+                    Intent payment = new Intent(this, PaymentWebView.class);
+                    startActivity(payment);
+                }
+
+//                Intent payment = new Intent(this, Payment.class);
+//                startActivity(payment);
             }
         } else {
             Toast.makeText(this, "Please Accept Terms and Conditions to continue.", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        assert connectivityManager != null;
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
     public void openLocation(View v) {
@@ -77,13 +96,22 @@ public class UserInfo extends AppCompatActivity {
     }
 
     private boolean checkUserInfo() {
-        if (!FirstName.getText().toString().equals("") &&
-                !LastName.getText().toString().equals("") &&
-                !PhoneNumber.getText().toString().equals("") &&
-                !Mail.getText().toString().equals("") &&
-                        (UserAddress1.isChecked() ||
-                        (UserAddress2.isChecked() && !UserRealAddress.getText().toString().equals("")))
-                ) {
+        if ((!FirstName.getText().toString().equals("") &&   //first name is not empty
+                FirstName.getText().toString().matches("[a-zA-Z]+")) &&   //first only contains letters
+
+                (!LastName.getText().toString().equals("") &&   //last name is not empty
+                LastName.getText().toString().matches("[a-zA-Z]+")) &&    //last name only contains letters
+
+                (!PhoneNumber.getText().toString().equals("") &&    //phone number is not empty
+                !PhoneNumber.getText().toString().equals("+") &&    //phone number is not '+'
+                PhoneNumber.getText().toString().matches("[0-9+]{8,}+")) &&  //phone number only containts numbers and '+' and is at least 8 characers
+
+                (!Mail.getText().toString().equals("") &&   //mail is not empty
+                checkEmail(Mail.getText().toString())) &&   //mail is valid
+
+                (UserAddress1.isChecked() ||    //studio is checked
+                (UserAddress2.isChecked() && !UserRealAddress.getText().toString().equals("")))    //user address in checked and not empty
+            ) {
 
             //save user info to variables class
             ((Variables) this.getApplication()).setFirstName(FirstName.getText().toString());
@@ -101,6 +129,16 @@ public class UserInfo extends AppCompatActivity {
         }
         Toast.makeText(this, "Please check your information.", Toast.LENGTH_SHORT).show();
         return false;
+    }
+
+    public static boolean checkEmail(String email) {
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\." +
+                "[a-zA-Z0-9_+&*-]+)*@" +
+                "(?:[a-zA-Z0-9-]+\\.)+[a-z" +
+                "A-Z]{2,7}$";
+
+        Pattern pat = Pattern.compile(emailRegex);
+        return pat.matcher(email).matches();
     }
 
     public void showTermsAndConditions(View v) {
